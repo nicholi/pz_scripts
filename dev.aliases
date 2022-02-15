@@ -1,0 +1,14 @@
+function createPzBase64() {
+  local -A scripts=(
+    [PZ_BASHRC_GZ_BASE64]=pz.bashrc
+    [PZ_RESTARTSH_GZ_BASE64]=pz_restart_graceful.sh
+    [PZ_WORKSHOPSH_GZ_BASE64]=pz_workshop_update.sh
+  )
+  local script scriptKey base64Script
+  for scriptKey in "${!scripts[@]}"; do
+    script="${scripts[${scriptKey}]}"
+    base64Script="$(gzip -c -9 "${script}" | base64 --wrap=0)"
+    echo "declare -r ${scriptKey}='${base64Script}'"
+  done
+}
+
