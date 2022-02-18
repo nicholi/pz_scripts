@@ -102,7 +102,7 @@ function main() {
     mkdir -p "${STEAM_DATA_BACKUP_DIR}"
     chgrp 'adm' "${STEAM_DATA_BACKUP_DIR}"
     setfacl -m "d:u:${PZ_USER}:rwX" -m "u:${PZ_USER}:rwx" \
-            -m "d:g:adm:rX" -m "g:adm:rx" \
+            -m "d:g:adm:rX" -m "g:adm:rwx" \
             -m 'd:o::-' -m 'o::-' \
             "${STEAM_DATA_BACKUP_DIR}"
 
