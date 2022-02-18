@@ -33,7 +33,7 @@ function main() {
   fi
 
   local pzServerName
-  if [[ -z "${1:-}" ]]; then
+  if [[ -z "${1:-}" || "${1}" == '--'* ]]; then
     echo 'ERROR: first parameter must supply name of server'
     exit 2
   fi
