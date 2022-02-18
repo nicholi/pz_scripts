@@ -113,7 +113,7 @@ function sleepAndReduceBy() {
     ((current-=reduceBy))
   fi
   sleep "${reduceBy}m"
-  echo ${current}
+  echo "${current}"
 }
 
 main "$@"
