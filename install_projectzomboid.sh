@@ -297,14 +297,14 @@ function hashPzPassword() {
   # first they hash password with MD5, and then feed that into bcrypt with a static salt
   # shellcheck disable=SC2016
   local hashPasswordScript='try {
-const Crypto = require("crypto");
-const Bcrypt = require("'"${PZ_NODE_PATH}/node_modules/bcryptjs"'");
-const md5Hashed = Crypto.createHash("md5").update('"${jsPassword}"').digest("hex");
-const hashedPassword = Bcrypt.hashSync(md5Hashed, "$2a$12$O/BFHoDFPrfFaNPAACmWpu");
-console.log(hashedPassword);
+  const Crypto = require("crypto");
+  const Bcrypt = require("'"${PZ_NODE_PATH}/node_modules/bcryptjs"'");
+  const md5Hashed = Crypto.createHash("md5").update('"${jsPassword}"').digest("hex");
+  const hashedPassword = Bcrypt.hashSync(md5Hashed, "$2a$12$O/BFHoDFPrfFaNPAACmWpu");
+  console.log(hashedPassword);
 } catch (err) {
-console.error(err.stack);
-process.exit(1);
+  console.error(err.stack);
+  process.exit(1);
 }
 '
   local adminHashedPassword

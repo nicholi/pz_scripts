@@ -18,14 +18,14 @@ function main() {
 
   # impromptu nodejs app to parse acf into json and echo back to stdout
   local acfParserScript='try {
-const AcfParser = require("'"${PZ_NODE_PATH}/node_modules/steam-acf2json"'");
-const Fs = require("fs");
-const zomboidAcfFile = Fs.readFileSync(process.argv[2], "utf-8");
-const decoded = AcfParser.decode(zomboidAcfFile);
-console.log(JSON.stringify(decoded));
+  const AcfParser = require("'"${PZ_NODE_PATH}/node_modules/steam-acf2json"'");
+  const Fs = require("fs");
+  const zomboidAcfFile = Fs.readFileSync(process.argv[2], "utf-8");
+  const decoded = AcfParser.decode(zomboidAcfFile);
+  console.log(JSON.stringify(decoded));
 } catch (err) {
-console.error(err.stack);
-process.exit(1);
+  console.error(err.stack);
+  process.exit(1);
 }
 '
   local zomboidCacheJson
