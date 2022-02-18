@@ -158,7 +158,7 @@ function pz_create_backup() {
   fi
 
   local backupDate="$(date -u +"%Y-%m-%dT%H-%M-%S")"
-  tar cf - --exclude='./Zomboid/Logs' -C "${STEAM_DATA_DIR}" './Zomboid' | \
+  sudo tar cf - --exclude='./Zomboid/Logs' -C "${STEAM_DATA_DIR}" './Zomboid' | \
     7z a -si -t7z -m0=lzma2 -mx=4 -ms=on -mfb=64 -md=32m "${STEAM_DATA_BACKUP_DIR}/Zomboid_${backupDate}.tar.7z"
 }
 
@@ -173,7 +173,7 @@ function pz_restore_backup() {
   # as the backup restores EVERYTHING, we want to assure no old files remain
   # utilize pz_reset_server followed by extraction, this will keep our Logs dir untouched
   pz_reset_server 1 1
-  7z x -so "${backupFile}" | tar xf - -C "${STEAM_DATA_DIR}"
+  7z x -so "${backupFile}" | sudo tar xf - -C "${STEAM_DATA_DIR}"
 }
 
 function pz_reset_server() {
@@ -224,7 +224,7 @@ function pz_reset_map_partial() {
 
   local findRegex files filesCount=0 keypress=''
   findRegex="${pzServerSavesDir}"'/map_\('"${coordXRegex}"'\)_\('"${coordYRegex}"'\)\.bin'
-  files="$(find "${pzServerSavesDir}" -type f -iregex "${findRegex}" | sort)"
+  files="$(sudo find "${pzServerSavesDir}" -type f -iregex "${findRegex}" | sort)"
   if [[ -n "${files}" ]]; then
     filesCount="$(wc -l <<< "${files}")"
   fi
@@ -240,5 +240,5 @@ function pz_reset_map_partial() {
     return
   fi
 
-  find "${pzServerSavesDir}" -type f -iregex "${findRegex}" -delete
+  sudo find "${pzServerSavesDir}" -type f -iregex "${findRegex}" -delete
 }
