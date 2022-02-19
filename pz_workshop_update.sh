@@ -16,6 +16,27 @@ function main() {
     return
   fi
 
+  local jqParseRawInputQuery serviceJson activeState subState activeEnterTimestamp
+  jqParseRawInputQuery='split("\n") | map(select(. != "") | split("=") | {"key": .[0], "value": (.[1:] | join("="))}) | from_entries'
+  serviceJson="$(systemctl show -p "ActiveState" -p "SubState" -p "ActiveEnterTimestamp" pz-server.service | \
+    jq -c --slurp --raw-input "${jqParseRawInputQuery}")"
+  read -r -d '' activeState subState activeEnterTimestamp \
+    < <(jq -r '[.ActiveState, .SubState, .ActiveEnterTimestamp] | map("__"+.) | join("\n")' <<< "${serviceJson}"; printf '\0';)
+  # handle empty strings, prefixed with __
+  activeState="${activeState#__}"
+  subState="${subState#__}"
+  activeEnterTimestamp="${activeEnterTimestamp#__}"
+  if [[ "${activeState}" != 'active' || "${subState}" != 'running' ]]; then
+    # service not currently running, may be offline or in middle of restarting phase from previous workshop-update
+    echo "Service not online. ActiveState=${activeState}. SubState=${subState}" 
+    return
+  fi
+  # or has started less than 1 minute ago
+  if [[ "$(date --date "${ActiveEnterTimestamp}" '+%s')" -ge "$(date --date '1 min ago' '+%s')" ]]; then
+    echo "Service only recently started. ActiveEnterTimestamp=${activeEnterTimestamp}. CurrentTimestamp=$(date)"
+    return
+  fi
+
   # impromptu nodejs app to parse acf into json and echo back to stdout
   local acfParserScript='try {
   const AcfParser = require("'"${PZ_NODE_PATH}/node_modules/steam-acf2json"'");
