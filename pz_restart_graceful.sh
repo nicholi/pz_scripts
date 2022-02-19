@@ -3,11 +3,15 @@
 set -o nounset -o errexit -o pipefail
 shopt -s inherit_errexit
 
-declare -ri DEFAULT_RESTART_MINS=30
-declare -ri ALERT_EVERY_MIN=5
+declare -i DEFAULT_RESTART_MINS=30
+declare -i ALERT_EVERY_MIN=5
 
 # shellcheck source=./pz.bashrc
 source /usr/local/etc/pz.bashrc
+if [[ -f /usr/local/etc/pz.bashrc.local ]]; then
+  # use this file to specify any overrides
+  source /usr/local/etc/pz.bashrc.local
+fi
 
 function main() {
   local restartMins="${1:-${DEFAULT_RESTART_MINS}}"

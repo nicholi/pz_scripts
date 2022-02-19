@@ -5,9 +5,15 @@ shopt -s inherit_errexit
 
 # different from server appid
 declare -r PZ_STEAM_APPID=108600
+# parseable by date
+declare SERVICE_RUNNING_OLDER_THAN='1 min ago'
 
 # shellcheck source=./pz.bashrc
 source /usr/local/etc/pz.bashrc
+if [[ -f /usr/local/etc/pz.bashrc.local ]]; then
+  # use this file to specify any overrides
+  source /usr/local/etc/pz.bashrc.local
+fi
 
 function main() {
   local zomboidAcfFile="${PZ_HOME}/steamapps/workshop/appworkshop_${PZ_STEAM_APPID}.acf"
@@ -32,7 +38,7 @@ function main() {
     return
   fi
   # or has started less than 1 minute ago
-  if [[ "$(date --date "${ActiveEnterTimestamp}" '+%s')" -ge "$(date --date '1 min ago' '+%s')" ]]; then
+  if [[ "$(date --date "${ActiveEnterTimestamp}" '+%s')" -ge "$(date --date "${SERVICE_RUNNING_OLDER_THAN}" '+%s')" ]]; then
     echo "Service only recently started. ActiveEnterTimestamp=${activeEnterTimestamp}. CurrentTimestamp=$(date)"
     return
   fi
