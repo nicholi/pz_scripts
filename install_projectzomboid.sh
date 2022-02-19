@@ -67,7 +67,18 @@ function main() {
   fi
 
   local -a packages=(
-    sqlite3 acl p7zip-full jq crudini
+    # extended acl file permissions
+    acl
+    # sqlite client to insert admin into db
+    sqlite3
+    # backups using .tar.7z
+    p7zip-full
+    # manipulate json
+    jq
+    # manipulate ini
+    crudini
+    # only necessary to install yq
+    snapd
   )
   # node/npm could be installed from alt locations
   # we do not want to mix/match if not necessary
@@ -75,6 +86,9 @@ function main() {
   which npm  >/dev/null || packages+=(npm)
   apt-get update -q=2 -y
   apt-get install -y "${packages[@]}"
+
+  # to manipulate yaml
+  snap install yq
 
   # create user if does not exist
   getent passwd "${PZ_USER}" >/dev/null || adduser --system --group --home "${PZ_HOME}" "${PZ_USER}"
@@ -327,9 +341,6 @@ function installRcon() {
     echo "WARNING: Failed to detect latest github release for ${rconGithubRepo}"
     return
   fi
-
-  # to manipulate the yaml file
-  snap install yq
 
   local rconTarball
   rconTarball="$(mktemp)"
