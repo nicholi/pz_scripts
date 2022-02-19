@@ -38,7 +38,7 @@ function main() {
     return
   fi
   # or has started less than 1 minute ago
-  if [[ "$(date --date "${ActiveEnterTimestamp}" '+%s')" -ge "$(date --date "${SERVICE_RUNNING_OLDER_THAN}" '+%s')" ]]; then
+  if [[ "$(date --date "${activeEnterTimestamp}" '+%s')" -ge "$(date --date "${SERVICE_RUNNING_OLDER_THAN}" '+%s')" ]]; then
     echo "Service only recently started. ActiveEnterTimestamp=${activeEnterTimestamp}. CurrentTimestamp=$(date)"
     return
   fi
