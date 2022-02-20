@@ -98,7 +98,7 @@ function runSteamCmdUpdate() {
     +app_update "${PZ_SERVER_STEAM_APPID}" validate
     +quit
   )
-  sudo -u "${STEAMCMD_USER}" -s /bin/bash "${STEAMCMD_BIN}" "${STEAMCMD_PARAMS[@]}"
+  sudo -u "${STEAMCMD_USER}" "${STEAMCMD_BIN}" "${STEAMCMD_PARAMS[@]}"
 
   rm -f "${PZ_RUN_STEAMCMD_UPDATE}"
 }
