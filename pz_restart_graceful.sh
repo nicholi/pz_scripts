@@ -3,6 +3,8 @@
 set -o nounset -o errexit -o pipefail
 shopt -s inherit_errexit
 
+declare -r PZ_SERVER_STEAM_APPID=380870
+
 declare -i DEFAULT_RESTART_MINS=30
 declare -i ALERT_EVERY_MIN=5
 
@@ -80,7 +82,25 @@ function restartAndBackup() {
   pz_stop
   sleep 1s
   pz_create_backup
+  runSteamCmdUpdate
   pz_start
+}
+
+function runSteamCmdUpdate() {
+  if [[ ! -f "${PZ_RUN_STEAMCMD_UPDATE}" ]]; then
+    # use simple file to signal we should perform steamcmd update as well
+    return
+  fi
+
+  local -a STEAMCMD_PARAMS=(
+    +force_install_dir "${PZ_HOME}"
+    +login anonymous
+    +app_update "${PZ_SERVER_STEAM_APPID}" validate
+    +quit
+  )
+  sudo -u "${STEAMCMD_USER}" -s /bin/bash "${STEAMCMD_BIN}" "${STEAMCMD_PARAMS[@]}"
+
+  rm -f "${PZ_RUN_STEAMCMD_UPDATE}"
 }
 
 function sleepAndReduceBy() {

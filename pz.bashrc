@@ -10,6 +10,11 @@ declare PZ_DATA="${STEAM_DATA_DIR}/Zomboid"
 declare STEAM_DATA_BACKUP_DIR="${STEAM_DATA_DIR}/Backups"
 declare PZ_SAVE_SLEEP=10s
 
+declare STEAMCMD_USER=steam
+declare PZ_USER=pz_user
+
+declare PZ_RUN_STEAMCMD_UPDATE="${PZ_HOME}/.run_steamcmd_update"
+
 declare PZ_NODE_PATH=/opt/pz_node_modules
 
 function rcon_cmd() {
