@@ -1,3 +1,6 @@
+declare STEAMCMD_HOME=/opt/steamcmd
+declare STEAMCMD_BIN="${STEAMCMD_HOME}/steamcmd.sh"
+
 declare STEAM_GAMES_DIR=/opt/steamgames
 declare PZ_HOME="${STEAM_GAMES_DIR}/ProjectZomboid"
 
@@ -241,4 +244,28 @@ function pz_reset_map_partial() {
   fi
 
   sudo find "${pzServerSavesDir}" -type f -iregex "${findRegex}" -delete
+}
+
+function parseAcfToJson() {
+  local acfFile="${1}"
+
+  if [[ ! -f "${acfFile}" ]]; then
+    echo "ERROR: acf file not found - ${acfFile}" 1>&2
+    return 1
+  fi
+
+  # impromptu nodejs app to parse acf into json and echo back to stdout
+  local acfParserScript='try {
+  const AcfParser = require("'"${PZ_NODE_PATH}/node_modules/steam-acf2json"'");
+  const Fs = require("fs");
+  const acfFile = Fs.readFileSync(process.argv[2], "utf-8");
+  const decoded = AcfParser.decode(acfFile);
+  console.log(JSON.stringify(decoded));
+} catch (err) {
+  console.error(err.stack);
+  process.exit(1);
+}
+'
+
+  node - "${acfFile}" <<< "${acfParserScript}"
 }
