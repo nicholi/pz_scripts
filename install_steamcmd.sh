@@ -4,6 +4,7 @@ set -o nounset -o errexit -o pipefail
 shopt -s inherit_errexit
 
 declare -r STEAMCMD_HOME=/opt/steamcmd
+declare -r STEAMCMD_BIN="${STEAMCMD_HOME}/steamcmd.sh"
 declare -r STEAMCMD_USER=steam
 declare -r STEAMCMD_INSTALLER='https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz'
 
@@ -32,7 +33,7 @@ function main() {
   chown -R "${STEAMCMD_USER}:${STEAMCMD_USER}" "${STEAMCMD_HOME}"
 
   # perform first run
-  sudo -u "${STEAMCMD_USER}" -s /bin/bash "${STEAMCMD_HOME}/steamcmd.sh" +login anonymous +quit
+  sudo -u "${STEAMCMD_USER}" -s /bin/bash "${STEAMCMD_BIN}" +login anonymous +quit
 }
 
 main "$@"
