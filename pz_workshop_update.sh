@@ -28,11 +28,11 @@ function main() {
   activeEnterTimestamp="${activeEnterTimestamp#__}"
 
   if [[ "${activeState}" != 'active' || "${subState}" != 'running' ]]; then
-    # service not currently running, may be offline or in middle of restarting phase from previous workshop-update
+    # service not currently running, may be offline or in middle of restarting phase from previous execution
     echo "Service not online. ActiveState=${activeState}. SubState=${subState}" 
     return
   fi
-  # or has started less than 1 minute ago
+  # or has started less than SERVICE_RUNNING_OLDER_THAN
   if [[ "$(date --date "${activeEnterTimestamp}" '+%s')" -ge "$(date --date "${SERVICE_RUNNING_OLDER_THAN}" '+%s')" ]]; then
     echo "Service only recently started. ActiveEnterTimestamp=${activeEnterTimestamp}. CurrentTimestamp=$(date)"
     return
