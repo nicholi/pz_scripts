@@ -166,7 +166,7 @@ function pz_create_backup() {
   fi
 
   local backupDate="$(date -u +"%Y-%m-%dT%H-%M-%S")"
-  sudo tar cf - --exclude='./Zomboid/Logs' -C "${STEAM_DATA_DIR}" './Zomboid' | \
+  sudo tar cf - --exclude='./Zomboid/Logs' --exclude='./Zomboid/backups' -C "${STEAM_DATA_DIR}" './Zomboid' | \
     7z a -si -t7z -m0=lzma2 -mx=4 -ms=on -mfb=64 -md=32m "${STEAM_DATA_BACKUP_DIR}/Zomboid_${backupDate}.tar.7z"
 }
 
