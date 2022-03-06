@@ -445,7 +445,7 @@ find "${STEAM_DATA_BACKUP_DIR}" -maxdepth 1 -type f -mtime "+${MAX_DAYS_BACKUP}"
 Cmnd_Alias PZ_START = /bin/systemctl start pz-server.service
 Cmnd_Alias PZ_RESTART = /bin/systemctl restart pz-server.service
 Cmnd_Alias PZ_SCHED_RESTART = /bin/systemctl start pz-scheduled-restart.service
-Cmnd_Alias PZ_CREATE_BAK = /usr/bin/tar cf - --exclude=./Zomboid/Logs -C '"${STEAM_DATA_DIR}"' ./Zomboid
+Cmnd_Alias PZ_CREATE_BAK = /usr/bin/tar cf - --exclude=./Zomboid/Logs --exclude=./Zomboid/backups -C '"${STEAM_DATA_DIR}"' ./Zomboid
 Cmnd_Alias PZ_STEAMCMD = '"${STEAMCMD_BIN}"' +force_install_dir '"${PZ_HOME}"' +login anonymous +app_update '"${PZ_SERVER_STEAM_APPID}"' validate +quit
 
 pz_user ALL=(root) NOPASSWD: PZ_STOP, PZ_START, PZ_RESTART, PZ_SCHED_RESTART, PZ_CREATE_BAK
