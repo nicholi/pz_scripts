@@ -131,7 +131,7 @@ function pz_resetuser_password() {
   local sqlQuery="UPDATE [whitelist] SET [password] = '${bcryptPassword}', [encryptedPwd] = 'true', [pwdEncryptType] = 2
   WHERE [username] = '${userName}';
 "
-  sqlite3 "${databaseFile}" <<< "${sqlQuery}"
+  sudo sqlite3 "${databaseFile}" <<< "${sqlQuery}"
   echo "Reset ${userName} password to: ${password}"
 }
 
