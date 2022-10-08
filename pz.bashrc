@@ -318,7 +318,14 @@ function hashPzPassword() {
 
   # holding any common nodejs modules under this path
   mkdir -p "${PZ_NODE_PATH}"
-  npm install --prefix "${PZ_NODE_PATH}" bcryptjs 1>&2
+
+  local npmStdErr retval
+  npmStdErr="$(npm install --prefix "${PZ_NODE_PATH}" bcryptjs 2>&1)"
+  retval=$?
+  if [[ ${retval} -ne 0 ]]; then
+    echo "${npmStdErr}" 1>&2
+    return ${retval}
+  fi
 
   # we also want to assure to encode the password as a safe to pass javascript string
   local jsPassword
