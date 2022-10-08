@@ -329,7 +329,7 @@ function hashPzPassword() {
 
   # we also want to assure to encode the password as a safe to pass javascript string
   local jsPassword
-  jsPassword="$(jq -n '.' <<< "${CHAR_DOUBLEQUOTE}${password}${CHAR_DOUBLEQUOTE}" )"
+  jsPassword="$(jq '.' <<< "${CHAR_DOUBLEQUOTE}${password}${CHAR_DOUBLEQUOTE}" )"
 
   # class PZcrypt logic is rather obtuse
   # first they hash password with MD5, and then feed that into bcrypt with a static salt
