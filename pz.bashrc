@@ -113,7 +113,7 @@ function pz_resetuser_password() {
     return 1
   fi
   local databaseFile="${PZ_DATABASE_DIR}/${serverName}.db"
-  if [[ ! -f "${databaseFile}"]; then
+  if [[ ! -f "${databaseFile}" ]]; then
     echo "WARNING: db file not found for server -- ${databaseFile}"
     return 1
   fi
