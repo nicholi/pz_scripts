@@ -5,6 +5,13 @@ shopt -s inherit_errexit
 
 declare -r DEFAULT_SLEEP=120
 
+# shellcheck source=./pz.bashrc
+source /usr/local/etc/pz.bashrc
+if [[ -f /usr/local/etc/pz.bashrc.local ]]; then
+  # use this file to specify any overrides
+  source /usr/local/etc/pz.bashrc.local
+fi
+
 function main() {
   # expected to run immediately after startup, so warmup is necessary
   sleep "${DEFAULT_SLEEP}"
