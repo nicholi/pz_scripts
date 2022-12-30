@@ -510,7 +510,7 @@ Description=Project Zomboid Workshop Update Timer
 
 [Timer]
 # every half hour
-OnCalendar=*:00,30:00 UTC
+OnCalendar=*:30,30:30 UTC
 
 [Install]
 WantedBy=timers.target
