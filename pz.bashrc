@@ -118,7 +118,10 @@ function pz_resetuser_password() {
     return 1
   fi
 
-  hasPzUser "${databaseFile}" "${userName}" || { echo "WARNING: userName not found in db -- ${userName}"; return 1; }
+  hasPzUser "${databaseFile}" "${userName}" || {
+    echo "WARNING: userName not found in db -- ${userName}";
+    return 1;
+  }
 
   if [[ -z "${password}" ]]; then
     password="$(makepasswd --chars=8)"
