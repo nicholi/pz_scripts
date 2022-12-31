@@ -29,6 +29,9 @@ function main() {
   rconPlayersResponse="$(pz_players)"
   rconPlayersHeader="$(head -n1 <<< "${rconPlayersResponse}")"
   # NOTE: if pz changes any of its output to command this will "break"
+  ###
+  ### TODO: KEEP UP TO DATE
+  ###
   playerCount="$(sed -E 's/.*players connected \(([0-9]+)\).*/\1/i' <<< "${rconPlayersHeader}")"
 
   if [[ -z "${playerCount}" || "${rconPlayersHeader}" == "${playerCount}" ]]; then

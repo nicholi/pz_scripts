@@ -269,6 +269,9 @@ function insertAdminWhitelist() {
   # this is one of the more brittle parts of the pz installation, if any of the schema is changed
   # we fail fast. however inserting admin passwords natively into db (and hashed) is far better
   # than the alternative of passing the admin password as a commandline argument to server
+  ###
+  ### TODO: KEEP UP TO DATE
+  ###
   local adminUserIdResp sqlQuery
   sqlQuery="CREATE TABLE IF NOT EXISTS [whitelist] (
   [id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -285,7 +288,8 @@ function insertAdminWhitelist() {
   [ownerid] TEXT NULL,
   [accesslevel] TEXT NULL,
   [transactionID] INTEGER NULL,
-  [displayName] TEXT NULL);
+  [displayName] TEXT NULL,
+  [priority] BOOLEAN NULL DEFAULT false);
 CREATE UNIQUE INDEX IF NOT EXISTS [id] ON [whitelist]([id] ASC);
 CREATE UNIQUE INDEX IF NOT EXISTS [username] ON [whitelist]([username] ASC);
 SELECT 'SENTINEL', [id] FROM [whitelist] WHERE [username] = 'admin';

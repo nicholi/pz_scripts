@@ -59,6 +59,9 @@ function getPlayerCount() {
   rconPlayersResponse="$(pz_players)"
   rconPlayersHeader="$(head -n1 <<< "${rconPlayersResponse}")"
   # NOTE: if pz changes any of its output to commands this will "break"
+  ###
+  ### TODO: KEEP UP TO DATE
+  ###
   playerCount="$(sed -E 's/.*players connected \(([0-9]+)\).*/\1/i' <<< "${rconPlayersHeader}")"
 
   # we'll make it smart, so if regex fails (same text after processing) we assume there are players
