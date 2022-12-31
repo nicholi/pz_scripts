@@ -200,7 +200,7 @@ After=network-online.target local-fs.target
 [Service]
 Type=simple
 KillSignal=SIGINT
-TimeoutStopSec=180
+TimeoutSec=180
 Restart=on-failure
 User=${PZ_USER}
 Group=${PZ_USER}
