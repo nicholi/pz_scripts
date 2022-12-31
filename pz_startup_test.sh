@@ -20,8 +20,8 @@ function main() {
 
   # first check if rcon port is even open
   isPortListening "127.0.0.1" "27015" || {
-    echo "PZ Server post-startup: not listening on expected port (27015)" 1>&2
-    return 1
+    echo "PZ Server post-startup: not listening on expected port (27015)" 1>&2;
+    return 1;
   }
 
   # do a simple RCON message to see if server is listening
