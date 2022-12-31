@@ -45,7 +45,7 @@ function isPortListening() {
   local host="${1}"
   local port="${2}"
 
-  nc -v -z -w5 "${host}" "${port}"
+  nc -z -w5 "${host}" "${port}"
 }
 
 main "$@"
