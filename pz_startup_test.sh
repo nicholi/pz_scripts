@@ -14,6 +14,8 @@ fi
 
 function main() {
   # expected to run immediately after startup, so warmup is necessary
+  # TODO: switch to poll and wait method design, we can more quickly return once we find pz-server started
+  #  measure total wait time between individual attempts, separate both low level nc port check, and rcon cmd test
   sleep "${DEFAULT_SLEEP}"
 
   # first check if rcon port is even open
