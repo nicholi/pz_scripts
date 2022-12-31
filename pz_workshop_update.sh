@@ -37,6 +37,7 @@ function main() {
     echo "Service only recently started. ActiveEnterTimestamp=${activeEnterTimestamp}. CurrentTimestamp=$(date)"
     return
   fi
+  # or TODO: is running at same scheduled time (relatively close) as pz-scheduled-restart.timer
 
   local broadcastMsg=''
 
